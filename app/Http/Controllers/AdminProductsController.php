@@ -21,40 +21,37 @@ class AdminProductsController extends Controller
         $product = Product::find($id);
 
         if (!$product) {
-            return response()->json(['message' => 'Producto no encontrado'], 404);
+            return response()->json(['message' => 'Produto não encontrado'], 404);
         }
 
         return response()->json($product);
     }
 
-    public function productsByCategory($id_category)
-    {
-        $products = Product::where('id_category', $id_category)->get();
+    // public function productsByCategory($category_id)
+    // {
+    //     $products = Product::where('id_category', $id_category)->get();
 
-        return response()->json($products);
-    }
+    //     return response()->json($products);
+    // }
 
-    public function showCategories()
-    {
-        $categories = Category::all();
-        return response()->json($categories);
-    }
-
-    public function showCompanies()
-    {
-        $companies = User::where('rol_id', 3)->get();
-        return response()->json(['companies' => $companies]);
-    }
+    // public function showCategories()
+    // {
+    //     $categories = Category::all();
+    //     return response()->json($categories);
+    // }
 
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:products,slug',
             'description' => 'required|string',
             'stock' => 'required|integer',
-            'price' => 'required|numeric',
+            'weight' => 'required|numeric',
+            'price_product' => 'required|numeric',
+            'discounted_price_product' => 'nullable|numeric',
             'status' => 'required|in:Active,Inactive',
-            'id_category' => 'required|exists:categories,id',
+            'category' => 'required|in:Colares,Brincos,Pulseiras,Anéis,Casa',
         ]);
 
 
@@ -73,28 +70,52 @@ class AdminProductsController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:products,slug',
             'description' => 'required|string',
             'stock' => 'required|integer',
-            'price' => 'required|numeric',
+            'weight' => 'required|numeric',
+            'price_product' => 'required|numeric',
+            'discounted_price_product' => 'nullable|numeric',
             'status' => 'required|in:Active,Inactive',
-            'id_category' => 'required|exists:categories,id',
+            'category' => 'required|in:Colares,Brincos,Pulseiras,Anéis,Casa',
         ]);
 
         $product->update($request->all());
 
-        return response()->json(['message' => 'Producto actualizado correctamente'], 200);
+        return response()->json(['message' => 'Produto atualizado corretamente'], 200);
     }
+
+
+    public function associateImages(Request $request, $product_id)
+    {
+        $request->validate([
+            'image_ids' => 'required|array',
+            'image_ids.*' => 'exists:product_images,id'
+        ]);
+
+        $product = Product::find($product_id);
+
+        if (!$product) {
+            return response()->json(['message' => 'Produto não encontrado'], 404);
+        }
+
+        $product->images()->sync($request->image_ids);
+
+        return response()->json(['message' => 'Imagens associadas ao produto com sucesso'], 200);
+    }
+
+
 
     public function destroy($id)
     {
         $product = Product::find($id);
 
         if (!$product) {
-            return response()->json(['message' => 'Producto no encontrado'], 404);
+            return response()->json(['message' => 'Produto não encontrado'], 404);
         }
 
         $product->delete();
 
-        return response()->json(['message' => 'Producto eliminado correctamente'], 200);
+        return response()->json(['message' => 'Produto eliminado corretamente'], 200);
     }
 }

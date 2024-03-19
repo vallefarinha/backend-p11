@@ -16,9 +16,9 @@ class RegistrationTest extends TestCase
         $response = $this->post('/register', [
             'name' => $faker->name,
             'email' => $faker->unique()->safeEmail,
-            'adress' => '123 calle',
+            'address' => '123 calle',
             'phone' => '12346564',
-            'rol_id' => 2,
+            'rol_id' => 1,
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);

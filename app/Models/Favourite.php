@@ -5,19 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Favourite extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function reviews()
+
+    public function user()
     {
-        return $this->hasMany(Review::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function images()
+    public function product()
     {
-        return $this->hasMany(Image::class);
+        return $this->belongsTo(Product::class);
     }
 }

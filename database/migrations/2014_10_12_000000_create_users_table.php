@@ -16,12 +16,12 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('adress');
-            $table->string('phone');
             $table->string('password');
+            $table->rememberToken();
+            $table->string('phone', 30);
+            $table->text('address');
             $table->unsignedBigInteger('rol_id');
             $table->foreign('rol_id')->references('id')->on('rols');
-            $table->rememberToken();
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ class CheckUserRole
     public function handle(Request $request, Closure $next): Response
     {
         if ($request->user() && $request->user()->rol->id !== 2) {
-            return response()->json(['message' => 'Acceso no autorizado'], 403);
+            return response()->json(['message' => 'Acesos não autorizado'], 403);
         }
         return $next($request);
     }

@@ -1,13 +1,11 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\OrderDetail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-
-class Order extends Model
+class Cart extends Model
 {
     use HasFactory;
 
@@ -15,10 +13,10 @@ class Order extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function product_order(){
-        return $this->hasMany(Product_Order::class, 'order_id');
+    public function order_details(){
+        return $this->hasMany(OrderDetail::class, 'cart_id');
     }
 }

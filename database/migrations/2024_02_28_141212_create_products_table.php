@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_userCompany');
-            $table->foreign('id_userCompany')->references('id')->on('users')->where('rol_id', '=', 3);;
             $table->string('name');
+            $table->string('slug')->unique();
             $table->text('description');
             $table->tinyInteger('stock')->unsigned();
-            $table->double('price');
-            $table->enum('status',['Active', 'Inactive'])->default('Active');
-            $table->unsignedBigInteger('id_category');
-            $table->foreign('id_category')->references('id')->on('categories');
+            $table->double('weight');
+            $table->double('price_product');
+            $table->double('discounted_price_product');
+            $table->enum('category',['Colares', 'Brincos', 'Pulseiras', 'Anéis', 'Casa']);
+            $table->enum('status', ['Active', 'Inactive'])->default('Active');
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ class CheckAdminRole
     public function handle(Request $request, Closure $next): Response
     {
         if ($request->user() && $request->user()->rol->id !== 1) {
-            return response()->json(['message' => 'Acceso no autorizado'], 403);
+            return response()->json(['message' => 'Aceso não autorizado'], 403);
         }
         return $next($request);
     }

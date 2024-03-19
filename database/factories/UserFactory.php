@@ -28,7 +28,7 @@ class UserFactory extends Factory
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
-            'adress' => $this->faker->address,
+            'address' => $this->faker->address,
             'phone' => $this->faker->phoneNumber,
             'password' => static::$password ??= Hash::make('password'),
             'rol_id' => Rol::all()->random()->id,
@@ -46,4 +46,3 @@ class UserFactory extends Factory
         ]);
     }
 }
-

@@ -39,19 +39,18 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function order()
+    public function carts()
     {
-        return $this->belongsTo(Order::class);
+        return $this->hasMany(Cart::class);
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 
     public function rol()
     {
         return $this->belongsTo(Rol::class);
     }
-
-    public function products(){
-        return $this->hasMany(Product::class, 'id_userCompany');
-    }
-
 }
