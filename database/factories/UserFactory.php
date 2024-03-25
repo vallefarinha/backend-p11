@@ -28,10 +28,10 @@ class UserFactory extends Factory
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
-            'adress' => $this->faker->address,
+            'address' => $this->faker->address,
             'phone' => $this->faker->phoneNumber,
             'password' => static::$password ??= Hash::make('password'),
-            'rol_id' => Rol::all()->random()->id,
+            'usertype' => $this->faker->randomElement(['Admin', 'User']),
             'remember_token' => Str::random(10),
         ];
     }
@@ -46,4 +46,3 @@ class UserFactory extends Factory
         ]);
     }
 }
-

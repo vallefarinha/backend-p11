@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Requests\Auth;
+use Illuminate\Support\Facades\Log;
 
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
@@ -41,13 +42,19 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
+        Log::info('Trying to authenticate with email: ' . $this->input('email'));
+
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
+
+            Log::warning('Authentication failed for email: ' . $this->input('email'));
 
             throw ValidationException::withMessages([
                 'email' => __('auth.failed'),
             ]);
         }
+
+        Log::info('Authentication successful for email: ' . $this->input('email'));
 
         RateLimiter::clear($this->throttleKey());
     }

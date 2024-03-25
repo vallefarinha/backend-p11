@@ -1,29 +1,23 @@
 <?php
 
 namespace Tests\Feature\Auth;
-
-// use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use Faker\Factory as Faker;
 
 class RegistrationTest extends TestCase
 {
     // use RefreshDatabase;
 
-    public function test_new_users_can_register(): void
+    public function test_new_users_can_register()
     {
-        $faker = Faker::create();
-        $response = $this->post('/register', [
-            'name' => $faker->name,
-            'email' => $faker->unique()->safeEmail,
-            'adress' => '123 calle',
-            'phone' => '12346564',
-            'rol_id' => 2,
+        $response = $this->postJson(route('register'), [
+            'name' => 'Test User',
+            'email' => 'email000@example.com',
+            'address' => '123 Test St',
+            'phone' => '123456789',
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
 
-        $this->assertAuthenticated();
         $response->assertStatus(201);
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 
 
-class Order extends Model
+class Cart extends Model
 {
     use HasFactory;
 
@@ -18,7 +18,7 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function product_order(){
-        return $this->hasMany(Product_Order::class, 'order_id');
+    public function order_detail(){
+        return $this->hasMany(OrderDetail::class, 'order_id');
     }
 }

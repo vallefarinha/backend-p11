@@ -9,7 +9,7 @@ use App\Models\Product;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class Product_OrderFactory extends Factory
+class OrderDetailFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,10 +19,11 @@ class Product_OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'order_id' => $this->faker->numberBetween(1, 6),
-            'id_product' => $this->faker->numberBetween(1, 6),
+            'cart_id' => $this->faker->numberBetween(1, 6),
+            'product_id' => $this->faker->numberBetween(1, 6),
             'product_quantity' => $this->faker->randomNumber(1, 50),
-            'total_price' => $this->faker->randomFloat(2, 1, 100),
+            'subtotal_order_detail' => $this->faker->randomFloat(2, 1, 100),
+            'total_order_detail' => $this->faker->randomFloat(2, 1, 100),
         ];
     }
 }

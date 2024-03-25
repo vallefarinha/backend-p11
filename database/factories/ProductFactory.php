@@ -18,13 +18,15 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'id_userCompany' => User::where('rol_id', 3)->get()->random()->id,
             'name' => $this->faker->name,
             'description' => $this->faker->name,
+            'slug' => $this->faker->name,
             'stock' => $this->faker->randomNumber(1, 50),
-            'price' => $this->faker->randomFloat(2, 1, 100),
+            'price_product' => $this->faker->randomFloat(2, 1, 100),
+            'discounted_price_product' => $this->faker->randomFloat(2, 1, 100),
+            'category' => $this->faker->randomElement(['Brincos', 'Colares', 'Pulseiras', 'Anéis', 'Casa']),
             'status' => $this->faker->randomElement(['Active', 'Inactive']),
-            'id_category' => Category::all()->random()->id,
+
         ];
     }
 }

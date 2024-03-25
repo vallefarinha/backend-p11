@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -10,55 +9,57 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
+
 class AuthenticatedSessionController extends Controller
 {
-    /**
-     * Handle an incoming authentication request.
-     */
 
     public function store(LoginRequest $request): JsonResponse
     {
         try {
+            Log::info('Attempting user authentication...');
             $request->authenticate();
+            Log::info('User authenticated successfully.');
 
+            Log::info('Accessing authenticated user...');
             $user = $request->user();
-            $token = $user->createToken('token-name')->plainTextToken;
+            Log::info('User retrieved successfully.');
 
-            switch ($user->rol->name) {
-                case 'Admin':
-                    return response()->json(['token' => $token, 'message' => 'Inicio de sesión exitoso', 'rol' => 'Admin']);
-                    break;
-                case 'User':
-                    return response()->json(['token' => $token, 'message' => 'Inicio de sesión exitoso', 'rol' => 'User']);
-                    break;
-                case 'Company':
-                    return response()->json(['token' => $token, 'message' => 'Inicio de sesión exitoso', 'rol' => 'Company']);
-                    break;
-                default:
-                    return response()->json(['message' => 'Rol no reconocido: ' . $user->rol->name], 403);
-            }
+            Log::info('Logging in user...');
+            Auth::login($user);
+            Log::info('User logged in successfully.');
+
+            $token = $user->createToken('token-name')->plainTextToken;
+            $userType = $user->usertype;
+
+            Log::info('Storing token in session...');
+            session(['token' => $token]);
+            Log::info('Token stored in session successfully.');
+
+            return response()->json(['token' => $token, 'usertype' => $userType, 'message' => 'Sessão iniciada']);
+
         } catch (\Exception $e) {
-            Log::error('Error durante el inicio de sesión: ' . $e->getMessage());
-            return response()->json(['message' => 'Correo electrónico o contraseña incorrectos. Por favor, verifica tus credenciales.'], 401);
+            Log::error('Error during login: ' . $e->getMessage());
+            return response()->json(['message' => 'E-mail ou senha incorretos'], 401);
         }
     }
+
 
     /**
      * Destroy an authenticated session.
      */
-        public function destroy(Request $request)
-        {
-        try {
-            if ($request->user()) {
-                $request->user()->tokens()->delete();
-                Auth::guard('web')->logout();
-                return response()->json(['message' => 'Cierre de sesión exitoso']);
-            } else {
-                return response()->json(['message' => 'Usuario no autenticado'], 401);
-            }
-        } catch (\Exception $e) {
-            Log::error('Error durante el logout: ' . $e->getMessage());
-            return response()->json(['message' => 'Error durante el logout'], 500);
+    public function destroy(Request $request)
+{
+    try {
+        if ($request->user()) {
+            $request->user()->tokens()->delete();
+            Auth::guard('web')->logout();
+            return response()->json(['message' => 'Sessão encerrada']);
+        } else {
+            return response()->json(['message' => 'Usuário não autenticado'], 401);
         }
+    } catch (\Exception $e) {
+        Log::error('Erro de logout: ' . $e->getMessage());
+        return response()->json(['message' => 'Erro de logout'], 500);
+    }
     }
 }

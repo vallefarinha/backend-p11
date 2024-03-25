@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->enum('status',['Processing', 'Cancelled', 'Confirmed', 'Shipping', 'Delivered'])->default('Processing');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('unit_quantity')->default(0);
-            $table->double('total_price');
+            $table->integer('quantity')->default(0);
+            $table->enum('status',['Processing', 'Cancelled', 'Confirmed', 'Shipping', 'Delivered'])->default('Processing');
+            $table->double('subtotal_cart');
+            $table->double('total_cart');
             $table->timestamps();
         });
     }
