@@ -37,6 +37,19 @@ class AuthenticatedSessionController extends Controller
 
             return response()->json(['token' => $token, 'usertype' => $userType, 'message' => 'Sessão iniciada']);
 
+<<<<<<< HEAD
+=======
+            switch ($user->rol->name) {
+                case 'Admin':
+                    return response()->json(['token' => $token, 'message' => 'Inicio de sesión exitoso', 'rol' => 'Admin']);
+                    break;
+                case 'User':
+                    return response()->json(['token' => $token, 'message' => 'Inicio de sesión exitoso', 'rol' => 'User']);
+                    break;
+                default:
+                    return response()->json(['message' => 'Rol no reconocido: ' . $user->rol->name], 403);
+            }
+>>>>>>> b14085cc09a204c73eed9fa34c020dbeb42c05b5
         } catch (\Exception $e) {
             Log::error('Error during login: ' . $e->getMessage());
             return response()->json(['message' => 'E-mail ou senha incorretos'], 401);

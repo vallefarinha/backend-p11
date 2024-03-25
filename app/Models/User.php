@@ -40,6 +40,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+<<<<<<< HEAD
     public function cart()
     {
         return $this->belongsTo(Cart::class);
@@ -51,3 +52,20 @@ class User extends Authenticatable
     // }
 
 }
+=======
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function rol()
+    {
+        return $this->belongsTo(Rol::class);
+    }
+}
+>>>>>>> b14085cc09a204c73eed9fa34c020dbeb42c05b5

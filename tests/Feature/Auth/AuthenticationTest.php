@@ -1,6 +1,7 @@
 <?php
 
 namespace Tests\Feature\Auth;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -9,14 +10,19 @@ use Tests\TestCase;
 class AuthenticationTest extends TestCase
 {
     // use RefreshDatabase;
-
     public function test_users_can_authenticate_using_the_login_screen(): void
     {
+<<<<<<< HEAD
 
         // Attempt login
         $response = $this->post('/login', [
             'email' => 'maybell.anderson@example.org',
             'password' => 'password', // Use the actual password here
+=======
+        $response = $this->post('/login', [
+            'email' => 'toy.hermina@example.net',
+            'password' => '$2y$04$t75RjzKQFMNK3ftv/9li6ed7r2awQ.oq0/sXnXvuHDq3q3OrWKPnK',
+>>>>>>> b14085cc09a204c73eed9fa34c020dbeb42c05b5
         ]);
 
         // Debug: Print the response content
@@ -34,8 +40,8 @@ class AuthenticationTest extends TestCase
         $user = User::factory()->create();
 
         $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'wrong-password',
+            'email' => 'luciana@gmail.com',
+            'password' => '1234567',
         ]);
 
         $this->assertGuest();

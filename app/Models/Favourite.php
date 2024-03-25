@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-<<<<<<< HEAD
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -32,24 +31,5 @@ class Favourite extends Model
     {
         return $this->belongsTo(Product::class);
 >>>>>>>> b14085cc09a204c73eed9fa34c020dbeb42c05b5:app/Models/Favourite.php
-=======
-use App\Models\OrderDetail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class Cart extends Model
-{
-    use HasFactory;
-
-    protected $guarded =  [];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function order_details(){
-        return $this->hasMany(OrderDetail::class, 'cart_id');
->>>>>>> b14085cc09a204c73eed9fa34c020dbeb42c05b5
     }
 }

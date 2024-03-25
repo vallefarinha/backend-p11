@@ -9,8 +9,9 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $guarded =  [];
+    protected $guarded = [];
 
+<<<<<<< HEAD
     public function order_detail(){
         return $this->hasMany(OrderDetail::class);
     }
@@ -22,3 +23,15 @@ class Product extends Model
 
 
 };
+=======
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
+}
+>>>>>>> b14085cc09a204c73eed9fa34c020dbeb42c05b5

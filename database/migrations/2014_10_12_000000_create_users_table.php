@@ -17,11 +17,20 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+<<<<<<< HEAD
             $table->string('address');
             $table->string('phone');
             $table->string('password');
             $table->enum('usertype',['Admin', 'User'])->default('User');
             $table->rememberToken();
+=======
+            $table->string('password');
+            $table->rememberToken();
+            $table->string('phone', 30);
+            $table->text('address');
+            $table->unsignedBigInteger('rol_id');
+            $table->foreign('rol_id')->references('id')->on('rols');
+>>>>>>> b14085cc09a204c73eed9fa34c020dbeb42c05b5
             $table->timestamps();
         });
 
